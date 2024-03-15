@@ -48,4 +48,52 @@ public class ShoppingCart {
         this.cartItems = cartItems;
     }
 
+    public void emptyShoppingCart() {
+        this.cartItems = new ArrayList<>();
+    }
+
+    public void showItemSpecs(Product item) {
+        System.out.println("Nombre : " + item.getProductName() + " Precio: " + item.getProductPrice() + " Cantidad: "
+                + item.getProductStock());
+
+    }
+
+    public void showBill(List<Product> cartItems, double totalAmount) {
+        for (int i = 0; i < cartItems.size(); i++) {
+            showItemSpecs(cartItems.get(i));
+        }
+        System.out.println("Total: " + totalAmount);
+    }
+
+    public List<Product> returnBill() {
+        List<Product> itemsCart = getCartItems();
+        showBill(itemsCart, getItemsAmount());
+        emptyShoppingCart();
+        return itemsCart;
+    }
+
+    public void addItemToCart(Product x) {
+        setItemsAmount(calculeCartPrice());
+        cartItems.add(x);
+    }
+
+    public void removeItemOfCart(String productName) {
+        setItemsAmount(calculeCartPrice());
+        for (int j = 0; j < cartItems.size(); j++) {
+            if (cartItems.get(j).getProductName().equals(productName)) {
+                cartItems.remove(j);
+            }
+
+        }
+
+    }
+
+    public double calculeCartPrice() {
+        double totalAmount = 0;
+        for (int j = 0; j < cartItems.size(); j++) {
+            totalAmount += cartItems.get(j).getProductStock() * cartItems.get(j).getProductPrice();
+        }
+
+        return totalAmount;
+    }
 }
