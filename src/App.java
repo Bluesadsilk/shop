@@ -4,10 +4,12 @@ import java.util.Scanner;
 
 public class App {
     Scanner teclado = new Scanner(System.in);
-    private String[] categoriesName = { "panaderia", "conservas", "drogueria", "lacteos", "alcohol", "pescaderia",
+    public String[] categoriesName = { "panaderia", "conservas", "drogueria", "lacteos", "alcohol", "pescaderia",
             "carniceria" };
 
-    private List<Category> categoriesInitList = genCatList();
+    public List<Category> categoriesInitList = genCatList();
+
+    public ShoppingCart userCart = new ShoppingCart();
 
     public List<Category> genCatList() {
         List<Category> categoriesInitList = new ArrayList<>();
@@ -63,6 +65,14 @@ public class App {
         return option;
     }
 
+    public ShoppingCart getUserCart() {
+        return userCart;
+    }
+
+    public void setUserCart(ShoppingCart userCart) {
+        this.userCart = userCart;
+    }
+
     public int chooseProdOption() {
         int option = teclado.nextInt();
         teclado.nextLine();
@@ -71,6 +81,28 @@ public class App {
         }
 
         return option;
+    }
+
+    public void adjustItem(String catName, String prodName, int stockToAdjust) {
+        for (int i = 0; i < categoriesInitList.size(); i++) {
+            if (categoriesInitList.get(i).getCatName().equals(catName)) {
+                for (int j = 0; j < categoriesInitList.get(i).getProductList().size(); j++) {
+                    if (categoriesInitList.get(i).getProductList().get(j).getProductName().equals(prodName)) {
+                        categoriesInitList.get(i).getProductList().get(j).setProductStock(-stockToAdjust);
+                    }
+                }
+            }
+
+        }
+
+    }
+
+    public void adjustStock(List<Product> forAdjust) {
+        for (int i = 0; i < forAdjust.size(); i++) {
+            adjustItem(forAdjust.get(i).getProductCat(), forAdjust.get(i).getProductName(),
+                    forAdjust.get(i).getProductStock());
+
+        }
     }
 
     public int chooseCartOption() {
@@ -82,9 +114,6 @@ public class App {
             teclado.nextLine();
         }
         return option;
-    }
-
-    public void registerProduct() {
     }
 
     public void manageProducts() {
@@ -112,6 +141,12 @@ public class App {
         }
     }
 
+    public void registerProduct() {
+    }
+
+    public void modifyProduct(Product item) {
+    }
+
     public void removeProduct() {
     }
 
@@ -122,6 +157,8 @@ public class App {
     }
 
     public void createBill() {
+        List<Product> toRemove = userCart.returnBill();
+        adjustStock(toRemove);
     }
 
     public static void main(String[] args) throws Exception {
