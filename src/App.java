@@ -181,6 +181,17 @@ public class App {
     }
 
     public void removeProduct() {
+        System.out.println("Choose a product for remove it");
+        String productName = teclado.nextLine();
+
+        for (int i = 0; i < categoriesInitList.size(); i++) {
+            categoriesInitList.get(i);
+            for (int j = 0; j < categoriesInitList.get(i).getProductList().size(); j++) {
+                if (categoriesInitList.get(i).getProductList().get(j).getProductName().equals(productName)) {
+                    categoriesInitList.get(i).getProductList().remove(j);
+                }
+            }
+        }
     }
 
     public String chooseProductName() {
@@ -220,7 +231,7 @@ public class App {
         String itemName = chooseProductName();
         Product prodTransitional = returnProduct(itemName);
 
-        if (prodTransitional.getProductName().equals("error 404")) {
+        if (prodTransitional.getProductName().equals("Error 404")) {
             System.out.println("Item not found");
         } else {
             int stock = chooseStock(prodTransitional);

@@ -4,13 +4,14 @@
     X Create Menu
     X Show products;
     X Register products;
-    - Remove products;
+    X Remove products;
     X Manage ShoppingCart =>(
     X Show ShoppingCart Items
     X Add Item;
     X Remove Item;
     X Show shoppingCart totalAmount;
     X Empty the shoppingCart;
+    - Order by price && stock && name
     )
     
 )
