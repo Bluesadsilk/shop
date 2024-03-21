@@ -49,7 +49,16 @@ public class ShoppingCart {
     }
 
     public void emptyShoppingCart() {
-        this.cartItems = new ArrayList<>();
+        this.cartItems.removeAll(cartItems);
+        setItemsAmount(0);
+    }
+
+    public void showCartItems() {
+        for (int i = 0; i < cartItems.size(); i++) {
+            showItemSpecs(cartItems.get(i));
+        }
+        setItemsAmount(calculeCartPrice());
+        System.out.println("Total: " + itemsAmount);
     }
 
     public void showItemSpecs(Product item) {
@@ -72,8 +81,10 @@ public class ShoppingCart {
         return itemsCart;
     }
 
-    public void addItemToCart(Product x) {
-        cartItems.add(x);
+    public void addItemToCart(Product x, int stock) {
+        Product transitionItem = new Product(x.getProductName(), x.getProductCat(), x.getProductPrice(),
+                stock);
+        cartItems.add(transitionItem);
         setItemsAmount(calculeCartPrice());
     }
 
@@ -93,7 +104,6 @@ public class ShoppingCart {
         for (int j = 0; j < cartItems.size(); j++) {
             totalAmount += cartItems.get(j).getProductStock() * cartItems.get(j).getProductPrice();
         }
-
         return totalAmount;
     }
 }

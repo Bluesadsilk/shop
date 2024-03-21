@@ -2,32 +2,33 @@
 
 ## Program App interactions =>(
     X Create Menu
-    - Show products;
-    - Register products;
+    X Show products;
+    X Register products;
     - Remove products;
-    - Manage ShoppingCart =>(
-    - Add Item;
-    - Remove Item;
-    - Show shoppingCart totalAmount;
-    - Empty the shoppingCart;
+    X Manage ShoppingCart =>(
+    X Show ShoppingCart Items
+    X Add Item;
+    X Remove Item;
+    X Show shoppingCart totalAmount;
+    X Empty the shoppingCart;
     )
     
 )
 
 ## Category =>(
 
-    - Show all products inside;
+    X Show all products inside;
 
 )
 
 ## Products =>(
 
-    show Formated product;
+    X Show Formated product;
 
 )
 
 ## Shopping Cart =>(
     
-    - Show Formated product;
+    X Show Formated product;
 
 )

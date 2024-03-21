@@ -63,7 +63,8 @@ public class App {
         System.out.println("1. Add Item");
         System.out.println("2. Remove Item");
         System.out.println("3. Clear Shopping Cart");
-        System.out.println("4. Exit");
+        System.out.println("4. Show Cart Items");
+        System.out.println("5. Exit");
     }
 
     public void showProducts() {
@@ -96,7 +97,7 @@ public class App {
     public int chooseCartOption() {
         int option = teclado.nextInt();
         teclado.nextLine();
-        while (option < 1 && option < 4) {
+        while (option < 1 && option < 5) {
             System.out.println("No valid option");
             option = teclado.nextInt();
             teclado.nextLine();
@@ -152,6 +153,28 @@ public class App {
     }
 
     public void registerProduct() {
+        System.out.println("Choose product Category");
+        String catName = teclado.nextLine();
+        System.out.println("Choose Product Name");
+        String productName = teclado.nextLine();
+        System.out.println("Choose stock");
+        int stock = teclado.nextInt();
+        teclado.nextLine();
+        if (stock < 0) {
+            stock = 0;
+        }
+        System.out.println("Choose product Price");
+        double productPrice = teclado.nextDouble();
+        teclado.nextLine();
+        if (productPrice < 0) {
+            productPrice = 0;
+        }
+        for (int i = 0; i < categoriesInitList.size(); i++) {
+            if (categoriesInitList.get(i).getCatName().equals(catName)) {
+                Product productForAdd = new Product(productName, productName, productPrice, stock);
+                categoriesInitList.get(i).productList.add(productForAdd);
+            }
+        }
     }
 
     public void modifyProduct(Product item) {
@@ -183,13 +206,25 @@ public class App {
 
     }
 
+    public int chooseStock(Product x) {
+        System.out.println("Choose cuantity");
+        int stock = teclado.nextInt();
+        teclado.nextLine();
+        while (stock > x.getProductStock() && stock < 0) {
+            System.out.println("No valid option");
+        }
+        return stock;
+    }
+
     public void AddCartItem() {
         String itemName = chooseProductName();
         Product prodTransitional = returnProduct(itemName);
+
         if (prodTransitional.getProductName().equals("error 404")) {
             System.out.println("Item not found");
         } else {
-            userCart.addItemToCart(prodTransitional);
+            int stock = chooseStock(prodTransitional);
+            userCart.addItemToCart(prodTransitional, stock);
         }
     }
 
@@ -222,6 +257,9 @@ public class App {
                     break;
 
                 case 4:
+                    userCart.showCartItems();
+                    break;
+                case 5:
                     exitCart = true;
                     break;
                 default:
@@ -233,6 +271,7 @@ public class App {
     public void createBill() {
         List<Product> toRemove = userCart.returnBill();
         adjustStock(toRemove);
+        userCart.emptyShoppingCart();
     }
 
     public static void main(String[] args) throws Exception {
