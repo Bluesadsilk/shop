@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "App",
+            "projectName": "shop_3230f832"
+        },
+        {
+            "type": "java",
             "name": "Category",
             "request": "launch",
             "mainClass": "Category",

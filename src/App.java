@@ -36,6 +36,14 @@ public class App {
         this.categoriesInitList = categoriesInitList;
     }
 
+    public ShoppingCart getUserCart() {
+        return userCart;
+    }
+
+    public void setUserCart(ShoppingCart userCart) {
+        this.userCart = userCart;
+    }
+
     public void showOptions() {
 
         System.out.println("1. Manage Products");
@@ -52,6 +60,16 @@ public class App {
     }
 
     public void showCartOptions() {
+        System.out.println("1. Add Item");
+        System.out.println("2. Remove Item");
+        System.out.println("3. Clear Shopping Cart");
+        System.out.println("4. Exit");
+    }
+
+    public void showProducts() {
+        for (int i = 0; i < categoriesInitList.size(); i++) {
+            categoriesInitList.get(i).ShowCatProducts();
+        }
     }
 
     public int chooseOption() {
@@ -65,14 +83,6 @@ public class App {
         return option;
     }
 
-    public ShoppingCart getUserCart() {
-        return userCart;
-    }
-
-    public void setUserCart(ShoppingCart userCart) {
-        this.userCart = userCart;
-    }
-
     public int chooseProdOption() {
         int option = teclado.nextInt();
         teclado.nextLine();
@@ -80,6 +90,17 @@ public class App {
             System.out.println("No valid option");
         }
 
+        return option;
+    }
+
+    public int chooseCartOption() {
+        int option = teclado.nextInt();
+        teclado.nextLine();
+        while (option < 1 && option < 4) {
+            System.out.println("No valid option");
+            option = teclado.nextInt();
+            teclado.nextLine();
+        }
         return option;
     }
 
@@ -105,22 +126,11 @@ public class App {
         }
     }
 
-    public int chooseCartOption() {
-        int option = teclado.nextInt();
-        teclado.nextLine();
-        while (option < 1 && option < 3) {
-            System.out.println("No valid option");
-            option = teclado.nextInt();
-            teclado.nextLine();
-        }
-        return option;
-    }
-
     public void manageProducts() {
         boolean exitProd = false;
         while (exitProd == false) {
+            showProdOptions();
             int option = chooseProdOption();
-
             switch (option) {
                 case 1:
                     registerProduct();
@@ -150,10 +160,74 @@ public class App {
     public void removeProduct() {
     }
 
-    public void showProducts() {
+    public String chooseProductName() {
+        System.out.println("Choose item");
+        String itemName = teclado.nextLine();
+        return itemName;
+    }
+
+    public Product returnProduct(String name) {
+        for (int i = 0; i < categoriesInitList.size(); i++) {
+            Category cat = getCategoriesInitList().get(i);
+            for (int j = 0; j < cat.getProductList().size(); j++) {
+                Product prod = cat.productList.get(j);
+                if (prod.getProductName().equals(name)) {
+                    return prod;
+                }
+            }
+
+        }
+        Product error = new Product();
+        System.out.println("Error");
+        return error;
+
+    }
+
+    public void AddCartItem() {
+        String itemName = chooseProductName();
+        Product prodTransitional = returnProduct(itemName);
+        if (prodTransitional.getProductName().equals("error 404")) {
+            System.out.println("Item not found");
+        } else {
+            userCart.addItemToCart(prodTransitional);
+        }
+    }
+
+    public void removeCartItem() {
+        String itemName = chooseProductName();
+        Product prodTransitional = returnProduct(itemName);
+        if (prodTransitional.getProductName().equals("error 404")) {
+            System.out.println("Item not found");
+        } else {
+            userCart.removeItemOfCart(itemName);
+        }
     }
 
     public void manageShoopingCart() {
+        boolean exitCart = false;
+        while (exitCart == false) {
+            showCartOptions();
+            int cartOption = chooseCartOption();
+            switch (cartOption) {
+                case 1:
+                    AddCartItem();
+                    break;
+
+                case 2:
+                    removeCartItem();
+                    break;
+
+                case 3:
+                    userCart.emptyShoppingCart();
+                    break;
+
+                case 4:
+                    exitCart = true;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     public void createBill() {

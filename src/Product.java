@@ -57,4 +57,11 @@ public class Product {
         this.productStock = productStock;
     }
 
+    public void showProductStat() {
+        System.out.println(productName + "/ " + productCat + "/ " + productPrice + "$  " + productStock + "u");
+    }
+
+    public Product() {
+        this.productName = "Error 404";
+    }
 }

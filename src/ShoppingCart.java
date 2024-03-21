@@ -73,18 +73,18 @@ public class ShoppingCart {
     }
 
     public void addItemToCart(Product x) {
-        setItemsAmount(calculeCartPrice());
         cartItems.add(x);
+        setItemsAmount(calculeCartPrice());
     }
 
     public void removeItemOfCart(String productName) {
-        setItemsAmount(calculeCartPrice());
         for (int j = 0; j < cartItems.size(); j++) {
             if (cartItems.get(j).getProductName().equals(productName)) {
                 cartItems.remove(j);
             }
 
         }
+        setItemsAmount(calculeCartPrice());
 
     }
 

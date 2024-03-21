@@ -78,5 +78,9 @@ public class Category {
                 this.productList = productList;
         }
 
-        // Getters and setters for other fields if needed
+        public void ShowCatProducts() {
+                for (int i = 0; i < productList.size(); i++) {
+                        productList.get(i).showProductStat();
+                }
+        }
 }
